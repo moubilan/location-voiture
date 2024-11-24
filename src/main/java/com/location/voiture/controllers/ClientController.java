@@ -1,4 +1,4 @@
 package com.location.voiture.controllers;
 
-public class LocataireController {
+public class ClientController {
 }

@@ -1,4 +1,4 @@
 package com.location.voiture.repositories;
 
-public interface LocataireRepository {
+public interface ClientRepository {
 }

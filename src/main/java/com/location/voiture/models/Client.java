@@ -11,8 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "managers")
-public class Manager {
+@Table(name = "clients")
+public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,4 +29,13 @@ public class Manager {
 
     @Column(name = "password")
     private String password;
+
+    @Column(name = "telephone")
+    private String telephone;
+
+    @Column(name = "adresse")
+    private String adresse;
+
+    @Column(name = "permis_conduire_valide")
+    private boolean permisConduireValide;
 }
