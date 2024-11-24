@@ -40,4 +40,12 @@ public class Reservation {
 
     @Column(name = "is_approved")
     private boolean isApproved;
+
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    public Client client;
+
+    @ManyToOne
+    @JoinColumn(name = "voiture_id")
+    public Voiture voiture;
 }

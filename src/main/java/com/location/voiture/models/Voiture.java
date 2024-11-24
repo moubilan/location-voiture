@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -41,4 +43,7 @@ public class Voiture {
 
     @Column(name = "is_rented")
     private Boolean isRented;
+
+    @OneToMany(mappedBy = "voiture", cascade = CascadeType.ALL)
+    public List<Reservation> reservations;
 }
