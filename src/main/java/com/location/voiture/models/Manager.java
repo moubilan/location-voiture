@@ -1,15 +1,16 @@
 package com.location.voiture.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-@Getter
-@Setter
+//@EqualsAndHashCode(callSuper = true)
+@Data
+//@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "managers")
 public class Manager {
@@ -24,9 +25,6 @@ public class Manager {
     @Column(name = "prenom")
     private String prenom;
 
-    @Column(name = "email")
-    private String email;
-
-    @Column(name = "password")
-    private String password;
+    @Column(name = "username")
+    public String username;
 }

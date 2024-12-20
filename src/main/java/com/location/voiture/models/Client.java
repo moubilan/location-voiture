@@ -1,15 +1,14 @@
 package com.location.voiture.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
-@Getter
-@Setter
+//@EqualsAndHashCode(callSuper = true)
+@Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -26,11 +25,8 @@ public class Client {
     @Column(name = "prenom")
     private String prenom;
 
-    @Column(name = "email")
-    private String email;
-
-    @Column(name = "password")
-    private String password;
+    @Column(name = "username")
+    public String username;
 
     @Column(name = "telephone")
     private String telephone;
