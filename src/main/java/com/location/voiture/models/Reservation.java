@@ -1,12 +1,16 @@
 package com.location.voiture.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -35,16 +39,30 @@ public class Reservation {
     @Column(name = "assurance")
     private String assurance;
 
+    @Column(name = "kilometrage")
+    private String kilometrage;
+
+    @Column(name = "total_price")
+    private Double totalPrice;
+
     @Column(name = "status")
     private String status;
 
     @Column(name = "is_approved")
     private boolean isApproved;
 
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime modifiedAt;
+
+    @JsonBackReference("client")
     @ManyToOne
     @JoinColumn(name = "client_id")
     public Client client;
 
+    @JsonBackReference("voiture")
     @ManyToOne
     @JoinColumn(name = "voiture_id")
     public Voiture voiture;

@@ -1,5 +1,6 @@
 package com.location.voiture.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -35,11 +36,15 @@ public class Voiture {
     private Integer nombrePortes;
 
     @Column(name = "prix_journalier")
-    private Integer prixJournalier;
+    private Double prixJournalier;
 
     @Column(name = "is_rented")
     private Boolean isRented;
 
+    @Column(name = "image")
+    private String image;
+
+    @JsonManagedReference("voiture")
     @OneToMany(mappedBy = "voiture", cascade = CascadeType.ALL)
     public List<Reservation> reservations;
 }

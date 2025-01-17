@@ -1,32 +1,21 @@
 package com.location.voiture.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.List;
 
-//@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @Data
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "clients")
-public class Client {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @Column(name = "nom")
-    private String nom;
-
-    @Column(name = "prenom")
-    private String prenom;
-
-    @Column(name = "username")
-    public String username;
+@DiscriminatorValue("CLIENT")
+public class Client extends OurUser{
 
     @Column(name = "telephone")
     private String telephone;
@@ -37,6 +26,7 @@ public class Client {
     @Column(name = "permis_conduire_valide")
     private boolean permisConduireValide;
 
+    @JsonManagedReference("client")
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     public List<Reservation> reservations;
 }

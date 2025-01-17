@@ -1,30 +1,16 @@
 package com.location.voiture.models;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-//@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @Data
-//@Builder
-@NoArgsConstructor
+@SuperBuilder
+@AllArgsConstructor
 @Entity
-@Table(name = "managers")
-public class Manager {
+@DiscriminatorValue("MANAGER")
+public class Manager extends OurUser {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @Column(name = "nom")
-    private String nom;
-
-    @Column(name = "prenom")
-    private String prenom;
-
-    @Column(name = "username")
-    public String username;
 }

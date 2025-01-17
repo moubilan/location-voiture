@@ -1,52 +1,65 @@
 package com.location.voiture.controllers;
 
 import com.location.voiture.models.Client;
-import com.location.voiture.repositories.ClientRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.location.voiture.services.ClientService;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/public/api")
 public class ClientController {
 
-    private final ClientRepository clientRepository;
+    private final ClientService clientService;
 
-    private final PasswordEncoder passwordEncoder;
-
-    public ClientController(ClientRepository clientRepository, PasswordEncoder passwordEncoder) {
-        this.clientRepository = clientRepository;
-        this.passwordEncoder = passwordEncoder;
+    public ClientController(ClientService clientService) {
+        this.clientService = clientService;
     }
 
-    @GetMapping("/home")
-    public String home() {
-        return "Welcome to Rent car application";
-    }
-
+    // Get all clients
     @GetMapping("/clients")
-    public ResponseEntity<List<Client>> getAllClients() {
-        List<Client> clients =  clientRepository.findAll();
-        return new ResponseEntity<>(clients, HttpStatus.OK);
+    public List<Client> getAllClients() {
+        return clientService.getAllClients();
     }
 
+    // Get client by ID
     @GetMapping("/clients/{id}")
     public ResponseEntity<Client> getClientById(@PathVariable Integer id) {
-        Client client = clientRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("aucun client avec l'id: " + id));
-        return new ResponseEntity<>(client, HttpStatus.OK);
+        return clientService.getClientById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
-//
-//    @PostMapping("/register")
-//    public ResponseEntity<Client> createClient(@RequestBody Client client) {
-//        client.setPassword(passwordEncoder.encode(client.getPassword()));
-//        Client newClient = clientRepository.save(client);
-//        return new ResponseEntity<>(newClient, HttpStatus.CREATED);
-//    }
 
+    // Create a new client
+    @PostMapping("/clients")
+    public ResponseEntity<Client> createClient(@RequestBody Client client) {
+        Client createdClient = clientService.createClient(client);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdClient);
+    }
 
+    // Update an existing client
+    @PutMapping("/clients/{id}")
+    public ResponseEntity<Client> updateClient(@PathVariable Integer id, @RequestBody Client clientDetails) {
+        try {
+            Client updatedClient = clientService.updateClient(id, clientDetails);
+            return ResponseEntity.ok(updatedClient);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    // Delete a client
+    @DeleteMapping("/clients/{id}")
+    public ResponseEntity<Void> deleteClient(@PathVariable Integer id) {
+        try {
+            clientService.deleteClient(id);
+            return ResponseEntity.noContent().build();
+        } catch (EmptyResultDataAccessException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
