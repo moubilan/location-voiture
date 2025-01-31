@@ -12,12 +12,13 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
     long count();
 
     //@Query("SELECT SUM(r.totalPrice) FROM Reservation r WHERE r.status = 'CONFIRMED'")
-    @Query("SELECT COALESCE(SUM(r.totalPrice), 0) FROM Reservation r WHERE r.status = 'CONFIRMED' " +
-            "AND r.voiture IS NOT NULL AND r.client IS NOT NULL")
+//    @Query("SELECT COALESCE(SUM(r.totalPrice), 0) FROM Reservation r WHERE r.status = 'CONFIRMED' " +
+//            "AND r.voiture IS NOT NULL AND r.client IS NOT NULL")
+    @Query("SELECT COALESCE(SUM(r.totalPrice), 0) FROM Reservation r WHERE r.status = 'CONFIRMED'")
     Double calculateTotalRevenue();
 
     //@Query("SELECT COUNT(r) FROM Reservation r WHERE r.status = 'Pending'")
-    @Query("SELECT COUNT(r) FROM Reservation r WHERE r.status = 'Pending' " +
+    @Query("SELECT COUNT(r) FROM Reservation r WHERE r.status = 'PENDING' " +
             "AND r.voiture IS NOT NULL AND r.client IS NOT NULL")
     long countPendingReservations();
 

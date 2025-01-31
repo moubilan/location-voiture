@@ -1,5 +1,6 @@
 package com.location.voiture.dto;
 
+import com.location.voiture.models.Client;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -15,5 +16,4 @@ public class ClientReservationsDto {
     private Double totalPrice;
     private String status;
     private LocalDateTime createdAt;
-
 }
